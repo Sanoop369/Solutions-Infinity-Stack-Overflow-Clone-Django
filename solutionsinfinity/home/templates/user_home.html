@@ -1,0 +1,262 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <style>
+        body{
+            margin-top: 100px;
+            font-family: 'Poppins', sans-serif;
+        }
+        #fh1{
+            margin-top: 20px;
+        }
+        #sub-nav{
+            display: flex;
+            justify-content: space-around;
+        }
+        #logout-btn{
+            background-color: rgb(50, 122, 255);
+        }
+        #fh3{
+            text-align: left;
+            font-size: 19px;
+            padding-top: 15px;
+        }
+        @media screen and (max-width: 600px) {
+            #fh3{
+                font-size: 15px;
+                text-align: left;
+            }
+        }
+        #fh6{
+            text-align: right;
+            font-size: 15px;
+            /* padding-bottom: 20px; */
+            font-weight: normal;
+        }
+        @media screen and (max-width: 600px) {
+            #fh6{
+                font-size: 15px;
+                text-align: right;
+                font-weight: normal;
+            }
+        }
+        #fh5{
+            display: flex;
+            justify-content: space-around;
+            text-align: left;
+            font-size: 13px;
+            padding-top: 3px;
+            width: 90px;
+            color: rgb(223, 223, 223);
+            height: 20px;
+            font-weight: normal;
+            background-color: rgb(158, 158, 158);
+            border-radius: 20px;
+            /* padding-top: 20px; */
+            /* background-color: blue; */
+        }
+        @media screen and (max-width: 600px) {
+            #fh5{
+                font-size: 10px;
+            }
+        }
+        a{
+            color: rgb(0, 132, 255);
+        }
+        a:hover{
+            text-decoration: none;
+            color: darkblue;
+            
+        }
+        h5{
+            color: rgb(133, 133, 133);
+        }
+
+
+       
+            #search-bar {
+                height: 40px;
+                width: 50vw;
+              }
+              
+    input {
+        width: 90%;
+        height: 2.5rem;
+        outline: none;
+       
+        border: 0;
+        background-color: transparent;
+        color: var(--default-text-color);
+      }
+      
+      ::placeholder {
+        opacity: 0.7;
+        color: var(--default-text-color);
+      }
+      
+      #search-btn {
+        height: 2.9rem;
+        width: 4.5rem;
+        border: transparent;
+        background-color: var(--logo-color);
+      }
+      
+      .search-icon {
+        font-size: 25px;
+        color: var(--search-icon-color);
+      }
+      .empty-state {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      .empty-state-message {
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .empty-state-btn {
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 5px;
+        font-size: 18px;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+      }
+      .empty-state-btn:hover {
+        background-color: #0069d9;
+      }
+
+
+      
+      .filter-dropdown {
+        position: relative;
+        display: inline-block;
+        margin-right: 10px;
+      }
+      
+      .filter-dropdown select {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+        font-size: 14px;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 200px;
+        cursor: pointer;
+      }
+      
+      .filter-dropdown::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid #000;
+        pointer-events: none;
+      }
+      
+      .filter-dropdown select:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+      }
+      
+      .filter-dropdown select option:first-child {
+        color: #888;
+      }
+      
+      .filter-dropdown select option {
+        color: #000;
+      }
+      
+      .filter-dropdown select option:hover {
+        background-color: #f2f2f2;
+      }
+    
+      
+      
+    </style>
+
+
+    <div class="container" style="min-height: 100vh;"> 
+
+       
+          
+        {% if top_questions%}
+        
+    
+        <div id="sub-nav">
+            <h1 id="fh1">Top Questions</h1>
+            {% if user.is_authenticated %}
+            <button class="btn" id="logout-btn"><a id="fa" href="/ask_question" style="color: white; text-decoration: none;">Ask Question</a></button>
+            {% else %}
+            <button class="btn" id="logout-btn"><a id="fa"  href="/ask_question" style="color: white; text-decoration: none;">Ask Question</a></button>
+
+            {% endif %}
+            <button class="btn" id="logout-btn"><a id="fa" href="/all_questions" style="color: white; text-decoration: none;">All Questions</a></button>
+        </div>
+        <div class="filter-dropdown">
+            <select id="tag-filter">
+              <option value="">Your Tags</option>
+              {% for j in tags %}
+             <option value="{{j.id}}" >{{j.name}}</a></option>
+              {% endfor %}
+             
+              <!-- Add more options as needed -->
+            </select>
+          </div>
+        <br> <br><br>
+        <div class="list-question">
+            <div class="questions">
+                {% for i in top_questions %}
+               
+
+                <div class="container" style="background: linear-gradient(to right, rgb(181, 200, 224), rgba(255, 166, 0, 0.027)); padding: 5px; box-shadow: rgba(0, 0, 0, 0.383) 0px 5px 5px 0px; border-radius: 15px;" >
+                    <div id="title-sec" style="display: flex; align-items: center;">
+                       
+                        <h3 id="fh3"><a href="/question-detail/{{i.id}}">{{i.title}}</a></h3>
+                    </div>
+                    <hr>
+                   
+                    <h6 id="fh6" style="text-align: left;">{{i.description|truncatewords:15}}</h6>
+                   
+                    <h6 id="fh6" style="font-size: 10px; font-style: italic; color: rgb(155, 155, 155);">Asked By: <a href="/profile/{{i.asked_by}}">{{i.asked_by}}</a> on {{i.asked_at}}</h6>
+                    <h5 style="text-align: right; font-size: 12px; font-style: italic;">Tags: 
+                        {% for t in i.tags.all %}
+                        {{t}}
+                        {% endfor %}
+                    </h5>
+                    <h5 style="text-align: right; font-size: 12px; font-style: italic;">Answers: {{i.num_solutions}}</h5>
+                </div>
+                <br>
+                {% endfor %} <br>
+                <br>
+             <br><br><br><br><br><br>
+             
+            </div>
+        </div>  
+        {% else %}
+        <div class="empty-state">
+            <p class="empty-state-message">Please add tags to your watched tags.</p>
+            <button class="btn empty-state-btn"><a href="/user_tags">Watched Tags</a></button>
+          </div
+        {% endif %} 
+    </div>
+    <script>
+        document.getElementById("tag-filter").addEventListener("change", function() {
+            var selectedTag = this.value;
+            if (selectedTag) {
+              window.location.href = "/tag-question/" + selectedTag ;
+            } 
+          });
+    </script>
+{% endblock content %}

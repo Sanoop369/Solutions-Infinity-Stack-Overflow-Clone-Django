@@ -1,0 +1,518 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Solutions Infinity</title>
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="assets/css/main.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css"
+    rel="stylesheet"
+  />
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"> -->
+ 
+</head>
+<body>
+
+<header>
+
+<div class="nav-container">
+    <nav>
+        <div class="nav-brand">
+            <div class="hamburger-menu-container">
+
+                <div class="hamburger-menu">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+                <div class="nav-dropdown-menu">
+                    <a href="#" class="current-link">Home</a>
+                    <h5>Public</h5>
+                    <ul class="nav-ul">
+                        <li class="nav-item">
+                            <i class="fas fa-globe-europe"></i>
+                            <a href="" class="nav-link">Stack Overflow</a>
+                        </li>
+                        <li class="nav-item"><a href="#" class="nav-link">Tags</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">Users</a></li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item"><a href="/user_tags" class="nav-link">Watched Tags</a></li>
+                        {% endif %}
+                    </ul>
+                    
+                    
+                </div>
+            </div>
+
+            <a href="/" class="nav-icon">
+                <i class="fa fa-code" aria-hidden="true"></i>
+                <!-- <i class="fab fa-stack-overflow"></i> -->
+                <a href="/" style="text-decoration: none; color: black;"><div class="nav-icon-text">Solutions <span class="nav-bold-text" style= "color: rgb(5, 133, 54);"  >Infinity</span></a>
+                <!-- <div class="nav-icon-text">stack <span class="nav-bold-text">overflow</span> -->
+
+                
+                </div>
+            </a>
+        </div>
+
+        <div class="nav-search">
+            <div class="#">
+               
+     <div class="input-group">
+            
+            </div>
+
+            <div class="search-hints">
+                <div class="search-arrow-up"></div>
+                <div class="search-hint-body">
+                    <div class="hints-grid-column">
+                        <div class="hint-text"><span>[tag] </span> search within a tag</div>
+                        <div class="hint-text"><span>user:1234 </span>  search by author</div>
+                        <div class="hint-text"><span>"words here"</span> exact phrase </div>
+                    </div>
+                    <div class="hints-grid-column">
+                        <div class="hint-text"><span>answers:0</span> unanswered questions</div>
+                        <div class="hint-text"><span> score:3  </span> posts with a 3+ score</div>
+                    </div>
+                </div>
+                <div class="search-hint-footer">
+                    <a href="#" class="btn">Ask a question</a>
+                    <a href="#" class="search-help">Search help</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-outline">
+          <form action="{% url 'search' %}" method="POST">
+          {% csrf_token %}
+          <input id="search-input" placeholder="Search Here" type="search" id="form1" name="search" class="form-control" />
+          
+        </div>
+        <button id="search-button" type="submit" class="btn btn-primary">
+        </form>
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <div class="nav-right-buttons">
+            <div class="search-btn">
+                
+                <i class="fas fa-search"></i>
+            </div>
+            
+           {% if user.is_authenticated %}
+           <a href="{% url 'logout' %}" class="btn btn-login">Log Out</a>
+           {% else %}
+
+                <a href="{% url 'login' %}" class="btn btn-login">Log in</a>
+                <a href="{% url 'register' %}" class="btn btn-register">Sign up</a> 
+           {% endif %}
+           
+        </div>
+        <!-- <div class="nav-search">
+            <div>
+               
+                <form action="" method="GET">
+                    <input type="text" id="" name="search-area" placeholder="Search...">
+                    <button type="submit" class="p-3 mb-2 bg-danger text-white" style="margin-left: 340px; border-radius: 25px; border: none; padding: 8px;">Search</button>
+                </form>
+            </div>
+        
+
+        </div> -->
+   
+    </nav>
+</div>
+<!-- <h1 style="font-size: 20px;">hello</h1> -->
+    <div style="margin-top: 10px;">
+        {% if messages %}
+        {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}" role="alert">
+        <h4 style="text-align: center;">{{ message }}</h4>
+      </div>
+      {% endfor %}
+    {% endif %}
+    </div>
+
+        
+</header>
+
+    <style>
+        .triangle-up {
+            width: 0;
+            height: 5;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 15px solid #555;
+        }
+        
+        .triangle-down {
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 15px solid #555;
+        }
+
+        .answer-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+          }
+          
+          .answer-container textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            resize: none;
+            font-size: 16px;
+            line-height: 1.5;
+            font-family: Arial, sans-serif;
+          }
+          
+          .answer-container button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease;
+          }
+          
+          .answer-container button:hover {
+            background-color: #3e8e41;
+          }
+          .image-grid {
+            display: flex;
+            flex-wrap: wrap;
+            
+          }
+          
+          .image-grid img {
+            width: 30%;
+            margin-bottom: 10px;
+            margin-right: 10px;
+          }
+          .grid-item {
+            margin: 5px;
+            width: 48%;
+          }
+          .comment {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+          }
+          .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+          }
+          .comment-name {
+            margin: 0;
+          }
+          .comment-date {
+            font-size: 14px;
+            color: #666;
+          }
+          .comment-body p {
+            margin: 0;
+          }
+          #comment-form {
+            background-color: #f8f8f8;
+            padding: 20px;
+            border-radius: 10px;
+          }
+          
+          label {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333333;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          }
+          
+          textarea {
+            width: 100%;
+            height: 150px;
+            font-size: 16px;
+            color: #333333;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+          }
+          
+          button[type="submit"] {
+            background-color: #333333;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+          }
+          
+          button[type="submit"]:hover {
+            background-color: #555555;
+          }
+          p{
+            font-size: 20px;
+          }
+          
+          
+    </style>
+    <br><br><br>
+    <br><br>
+
+    
+    <div class="container" style="background-color: rgba(255, 235, 209, 0.808); padding: 5px; box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 5px 0px; border-radius: 20px;" >
+      <a onclick="goBack()" class="back-button"><i class="fa fa-arrow-left fa-3x" aria-hidden="true"></i></a> &nbsp; &nbsp;
+
+      <script>
+      function goBack() {
+        window.history.back();
+      }
+      </script>
+  
+      <h3 id="fh3" style="font-size: 36px; font-weight: bold; color: #1a5ce0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; text-transform: uppercase; letter-spacing: 2px;">{{question.title}}</h3>
+        <hr>
+        <h6 id="fh6"  style="font-size: 18px; line-height: 1.5; color: #666666; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">{{question.description}}</h6>
+        <hr>
+        <div class="image-grid">
+            {% if question.image1 %}
+            <img src="{{question.image1.url}}" alt="Image 1">
+            {% endif %}
+            {% if question.image2 %}
+            <img src="{{question.image2.url}}" alt="Image 2">
+            {% endif %}
+            
+           
+        </div>
+        <h6 id="fh6"style="text-align:right;font-size: 14px; color: #333333; font-weight: bold; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Asked By: <a href="/profile/{{question.asked_by}}">{{question.asked_by}}</a>&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; On: {{question.asked_at}}</h6>
+        <br>
+        {% if question_comments %}
+        <h2>Question Comments</h2>
+        {%endif%}
+        <br>
+        <div id="comments">
+            {% if question_comments %}
+            {% for k in question_comments %}
+            <div class="comment">
+              <div class="comment-header">
+               <a href="/profile/{{k.comment_by}}"> <h3 class="comment-name">{{k.comment_by}}</h3></a>
+                <span class="comment-date">{{k.commented_at}}</span>
+              </div>
+              <div class="comment-body">
+                <p>{{k.comment}}</p>
+              </div>
+            </div>
+            {% endfor%}
+            {% endif%}
+           
+          </div>
+        <h2>Add a Comment</h2>
+    <form id="comment-form" method="POST" action="">
+        {% csrf_token %}
+      
+      <label for="comment">Comment:</label>
+      <textarea id="comment" name="comment" required></textarea><br><br>
+      <button type="submit" name="qn-com">Submit</button>
+    </form>
+    <hr>
+    <hr style="border-top: 1px solid #0a0000; margin-top: 40px; margin-bottom: 40px;">
+
+        <br>
+        <br>
+        <h2 style="font-size: 28px; font-weight: bold; color: #333333; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin-top: 20px;">Answers...</h2> <br><br><br>
+        <br>
+        <br>
+        <hr style="border-top: 1px solid #070000; margin-top: 10px; margin-bottom: 20px;">
+
+        {% if solutions %}
+        <div class="m-2 p-1">
+            <div class="row">
+    {% for i in solutions %}
+                <!-- left (slider type) -->
+              <div class="col-md-2 col-sm-0">
+                
+              </div>
+              <!-- Main body right side -->
+              <div class="col-md-8 col-sm-12 m-2">
+                
+                <!-- question title -->
+                <h2 style="font-size: 20px; font-weight: bold; color: #08922f; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin-top: 40px;">{{i.title}}</h2>
+                
+    
+                <hr>
+    
+                <div style="display: flex;flex-direction: row;">
+                    <!-- left (upvote) -->
+                    <div style="flex:0.1;display: flex; justify-content: center;" class="pt-2">
+                        <div>
+                            <a href="/like/{{i.id}}?question={{question.id}}"><div class="triangle-up"></div></a>
+                                <div style="width: 100%;text-align: center;" class="pt-1 pb-1">{{i.upvotes}}</div>
+                               
+                        </div>
+                    </div>
+                    <!-- right (question) -->
+                    <div style="font-size: 16px; line-height: 1.5; color: #555555; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;" class="p-2">
+                       {{i.solution}}
+                    <!-- Tags -->
+                   
+                    </div>
+                    
+                </div>
+                <br><br>
+                
+                <div class="image-grid">
+                    {% if i.image1 %}
+                    <img src="{{i.image1.url}}" alt="Image 1">
+                    {% endif %}
+                    {% if i.image2 %}
+                    <img src="{{i.image2.url}}" alt="Image 2">
+                    {% endif %}
+                    
+                   
+                </div>
+                <br>
+                
+                <br>
+                <!-- comments -->
+              
+                     
+                <!-- end of comments -->
+    
+                <!-- User card -->
+                <div style="display: flex;justify-content:flex-end; ">
+                    
+                    <div style="display: flex;flex-direction: column;width: 250px;">
+                        <div  style="font-size: 14px; color: #888888; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;"> 
+                            Answered on {{i.answerd_at}}
+                        </div>
+                        <div style="display: flex;flex-direction: row;width: 250px;">
+                           
+                            <div style="flex: 0.7;" class="p-1">
+                                <p style="font-size: 14px; color: #333333; font-weight: bold; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;"><a href="/profile/{{i.answered_by}}" style="text-decoration: none; color: #333333;"><strong><a href="/profile/{{i.answered_by}}">{{i.answered_by}}</a></strong><br></p>
+    
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+                <br><br>
+                <hr>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p>No answers Yet..</p>
+                
+                <!-- 2nd anser -->
+              
+                  <!-- User card -->
+                  {% endif %}
+                  </div>
+                  
+                
+       
+    
+                  <div class="answer-container">
+                    <form action="" method="POST" id="formvalidation" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <label for="answer-title">Title:</label>
+                      <input type="text" id="answer-title" style="font-size:20px;" name="title" required>
+                      <br>
+                      <label for="answer-textarea">Your Answer:</label>
+                      <textarea id="answer-textarea" style="font-size:20px;" name="answer" rows="5" required></textarea>
+                      <label for="image1">Image 1:</label>
+                      <input type="file" name="image1" id="image1" onchange="validateFileExtension('image1', 'image1Error')" accept=".jpg, .jpeg, .png, .gif">
+                      <span id="image1Error" class="error"></span>
+                      
+                      <label for="image2">Image 2:</label>
+                      <input type="file" name="image2" id="image2" onchange="validateFileExtension('image2', 'image2Error')" accept=".jpg, .jpeg, .png, .gif">
+                      <span id="image2Error" class="error"></span>
+                      <br>
+                      <button type="submit" name="solution" class="btn btn-primary">Submit</button>
+                    </form>
+                  </div>
+                  
+      
+    </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    
+    <script>
+
+
+     
+        function validateFileExtension(inputId, errorId) {
+          var fileInput = document.getElementById(inputId);
+          var filePath = fileInput.value;
+          var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+          if (!allowedExtensions.exec(filePath)) {
+            document.getElementById(errorId).innerText = 'Please upload files with the following extensions: .jpg, .jpeg, .png, .gif only.';
+            fileInput.value = '';
+            return false;
+          }
+          document.getElementById(errorId).innerText = '';
+          return true;
+        }
+  
+      $(document).ready(function() {
+        
+        $("#formvalidation").validate({
+        rules: {
+          title: {
+            required: true,
+            
+            minlength: 5
+            },
+                   answer : {
+                        required: true,
+                      
+                        minlength: 10
+                        },
+                     
+        messages : {
+          name: {
+          minlength: "Title should be at least 5 characters",
+        
+          },
+                desc: {
+                    minlength: "answer should be at least 10 characters",
+                    digits : "No Numbers are allowed"
+                    },
+                  
+          
+                    
+          }
+        }
+        
+        });
+        
+        });
+        
+    </script>
+    
+    <!-- main -->
+  
+            <!-- Answer Box editor -->
+    

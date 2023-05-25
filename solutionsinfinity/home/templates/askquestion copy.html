@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <style>
+      form {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      
+      .card {
+        margin-bottom: 20px;
+      }
+      
+      .card-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      
+      .card-text {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+      
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+        font-size: 14px;
+      }
+      
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        height: 100px;
+        resize: vertical;
+      }
+      
+      input[type="file"] {
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+      
+      button[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      button[type="submit"]:hover {
+        background-color: #0069d9;
+      }
+      
+      .invis {
+        border: none;
+        height: 1px;
+        color: #333;
+        background-color: #333;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      select option {
+        font-size: 16px;
+        color: #333;
+        background-color: #f7f7f7;
+        padding: 10px;
+      }
+      
+      select option:hover {
+        background-color: #ddd;
+      }
+      
+      select option:checked {
+        background-color: #007bff;
+        color: #fff;
+      }
+      
+    </style>
+
+
+          <div class = "container">
+              <div class= "row">
+
+              <div class="p-2">
+                <h2><strong> Ask a public question</strong></h2>
+              </div>
+
+                <div class="col-12 col-md-1"></div>
+                <div class="col-12 col-md-8">
+
+                <form method="POST" action="" enctype="multipart/form-data" id="formvalidation">
+                  {% csrf_token %}
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Title</h5>
+                      <p class="card-text">Be specific and imagine you’re asking a question to another person.</p>
+                      <textarea name='title'  pattern=".{5,}" title="Text field must contain at least 5 characters." style="width:100%"></textarea>
+                      <hr class="invis">
+                      <h5 class="card-title">Body</h5>
+                      <p class="card-text">Include all the information someone would need to answer your question.</p>
+                      <textarea name="desc"></textarea>
+                      
+                      <hr class="invis">
+                      <h5 class="card-title">Tags</h5>
+                      <p class="card-text">Be specific and imagine you’re asking a question to another person.</p>
+                      <select class="form-select" name="tags" aria-label="Default select example" multiple required>
+                        {% for j in tags %}
+                         <option value="{{j.id}}">{{j.name}}</option>
+                         {% endfor %}
+                       </select>
+
+                       <hr class="invis">
+                      <h5 class="card-title">Image 1</h5>
+                      <p class="card-text">Add Image Related to your Question Which can be screenshot</p>
+                      <input type="File" name="image1" >
+                      <hr class="invis">
+                      <h5 class="card-title">Image 2</h5>
+                      <p class="card-text">Add Image Related to your Question Which can be screenshot</p>
+                      <input type="File" name="image2" >
+                      <hr class="invis">
+                      
+
+                     
+
+                    
+
+                    </div>
+                  </div>
+
+                  <button style="width:100%"; class="btn btn-primary mt-2 mb-2" type="submit"> Submit your Question</button>
+                </form>
+
+
+                </div>
+            
+                
+              </div>
+                
+
+              </div>
+
+          </div>
+
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+		
+		$("#formvalidation").validate({
+		rules: {
+			title: {
+				required: true,
+				
+				minlength: 5
+				},
+               desc : {
+                    required: true,
+                  
+                    minlength: 10
+                    },
+                 
+		messages : {
+			name: {
+			minlength: "Title should be at least 5 characters",
+		
+			},
+            desc: {
+                minlength: "Name should be at least 10 characters",
+                digits : "No Numbers are allowed"
+                },
+              
+			
+								
+			}
+		}
+		
+		});
+		
+		});
+		
+</script>
+
+          
+{% endblock %}
+ 
+
+

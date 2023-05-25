@@ -1,0 +1,62 @@
+{% extends "admin/base.html" %}
+{% load static  %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div>
+
+    <h2>Progression of Solution Infinity For Last 7 Days</h2>
+
+    <canvas id="lineChart"></canvas>
+
+    
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Retrieve the data from the server-side or define it here
+        var labels = {{ labels }};
+        var questionsData = {{ questions_data }};
+        var solutionsData = {{ solutions_data }};
+        
+        var ctx = document.getElementById('lineChart').getContext('2d');
+        var lineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Questions Asked',
+                        data: questionsData,
+                        borderColor: 'blue',
+                        fill: false
+                    },
+                    {
+                        label: 'Solutions Given',
+                        data: solutionsData,
+                        borderColor: 'green',
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Count'
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
