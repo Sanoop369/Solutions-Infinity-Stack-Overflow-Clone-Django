@@ -1,0 +1,45 @@
+{% extends "admin/base.html" %}
+{% load static  %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div>
+    <h2>Reputation of all users</h2>
+
+    <div style="width: 800px; height: 400px;">
+        <canvas id="userChart"></canvas>
+    </div>
+
+    <script>
+        // Get user labels and reputations from the context
+        var userLabels = {{ user_labels|safe }};
+        var userReputations = {{ user_reputations|safe }};
+
+        // Create the chart
+        var ctx = document.getElementById('userChart').getContext('2d');
+        var userChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: userLabels,
+                datasets: [{
+                    label: 'User Reputation',
+                    data: userReputations,
+                    backgroundColor: 'rgba(0, 54, 245, 0.8)',
+                    borderColor: 'rgba(0, 0, 0, 0.8)',
+                    borderWidth: 1
+                }]
+            },
+            
+            options: {
+                
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        precision: 0
+                    }
+                }
+            }
+        });
+    </script>
+  
+</div>
+{% endblock %}

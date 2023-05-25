@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login To Solutions Infinity</title>
+    <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    rel="stylesheet"
+  />
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    rel="stylesheet"
+  />
+  <!-- MDB -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css"
+    rel="stylesheet"
+  />
+</head>
+<body>
+    <section class="vh-100" style="background-color: #9A616D;">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-xl-10">
+              <div class="card" style="border-radius: 1rem;">
+                <div class="row g-0">
+                  <div class="col-md-6 col-lg-5 d-none d-md-block">
+                    <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" alt="Trendy Pants and Shoes"
+          class="w-100 rounded-t-5 rounded-tr-lg-0 rounded-bl-lg-5" />
+                  </div>
+                  <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                    <div class="card-body p-4 p-lg-5 text-black">
+      
+                    
+      
+                        <div class="d-flex align-items-center mb-3 pb-1">
+                            <a href="/">
+                                <i class="fa fa-code fa-5x" aria-hidden="true"></i>
+                              </a>
+                          <span class="h1 fw-bold mb-0">Solutions Infinity</span>
+                        </div>
+                        {% for i in messages %}
+{% if i.tags == 'success'%}
+        <div class="alert alert-success" role="alert">
+           {{i}}
+
+          </div>
+{% else %}
+<div class="alert alert-danger" role="alert">
+    {{i}}
+  </div>
+  {%  endif %}
+{% endfor %}
+
+                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
+
+                        <form method="post"  action="">
+                            {% csrf_token %}
+                           
+                        <div class="form-outline mb-4">
+                          <input type="text" id="uname" name="username" required pattern="[A-Za-z]{2,}" class="form-control form-control-lg" />
+                          <span id="UsernameError" class="error"></span>
+                          <label class="form-label" for="form2Example17">Username</label>
+                        </div>
+      
+                        <div class="form-outline mb-4">
+                          <input type="password" id="pwd"name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" class="form-control form-control-lg" />
+                          <label class="form-label" for="form2Example27">Password</label>
+                          <span id="passwordError" class="error"></span>
+                        </div>
+      
+                        <div class="pt-1 mb-4">
+                          <input  class="btn btn-dark btn-lg btn-block" value="Login" type="submit">
+                        </div>
+                    </form>
+      
+                       
+                        <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="/register"
+                            style="color: #393f81;">Register here</a></p>
+                       
+                      
+      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+</body>
+<script
+type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"
+></script>  
+</html>
+<script>
+
+  var passwordInput = document.getElementById("pwd");
+  var passwordError = document.getElementById("passwordError");
+
+  passwordInput.addEventListener("input", function() {
+    var password = passwordInput.value;
+
+    if (!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)) {
+      passwordError.textContent = "Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, and one digit";
+    } else {
+      passwordError.textContent = "";
+    }
+  });
+
+  var usernameInput = document.getElementById("uname");
+  var usernameError = document.getElementById("UsernameError");
+
+  usernameInput.addEventListener("input", function() {
+    if (usernameInput.validity.patternMismatch) {
+      usernameError.textContent = "Username must have at least 2 alphabetical characters";
+    } else {
+      usernameError.textContent = "";
+    }
+  });
+    function validateUserName() {
+        const nameError = document.getElementById('UsernameError');
+        const firstNameInput = document.getElementById('uname');
+      
+        
+        if (firstNameInput.value.trim().length > 5) {
+          nameError.textContent = '';
+          
+          return true;
+        } else {
+          nameError.textContent = "Please enter your User name atleast 5 character";
+          
+          
+          return false;
+        }
+      }
+
+      function validatePassword() {
+        const nameError = document.getElementById('password');
+        const firstNameInput = document.getElementById('pwd');
+      
+        
+        if (firstNameInput.value.trim().length > 8) {
+          nameError.textContent = "";
+          
+          return true;
+        } else {
+          nameError.textContent = "Password  Must be 8 Characters!";
+         
+          
+          return false;
+        }
+      }
+  
+</script>

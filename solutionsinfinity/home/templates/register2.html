@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css"
+  rel="stylesheet"
+/>
+
+    <style>
+        .card-registration .select-input.form-control[readonly]:not([disabled]) {
+            font-size: 1rem;
+            line-height: 2.15;
+            padding-left: .75em;
+            padding-right: .75em;
+            }
+            .card-registration .select-arrow {
+            top: 13px;
+            }
+            select option {
+              font-size: 16px;
+              color: #333;
+              background-color: #f7f7f7;
+              padding: 10px;
+            }
+            
+            select option:hover {
+              background-color: #ddd;
+            }
+            
+            select option:checked {
+              background-color: #007bff;
+              color: #fff;
+            }
+
+    </style>
+</head>
+<body>
+    <section class="h-100 bg-dark">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col">
+              <div class="card card-registration my-4">
+                <div class="row g-0">
+                  <div class="col-xl-6 d-none d-xl-block">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                      alt="Sample photo" class="img-fluid"
+                      style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+                  </div>
+                  <div class="col-xl-6">
+                    <div class="card-body p-md-5 text-black">
+                      <h3 class="mb-5 text-uppercase">Registration form</h3>
+                      {% for i in messages %}
+        <div class="alert alert-danger" role="alert">
+            {{i}}
+          </div>
+          {% endfor %}
+                     
+                        <form method="POST"  name="form1" action="" >
+                          {% csrf_token %}
+                          <div class="row">
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <input  id="fname" class="form-control form-control-lg"   type="text" autocomplete="off" name="fname"  onblur="validateFirstName()" minlength="2" required  autocomplete="given-name" maxlength="100" />
+                            <label class="form-label" for="form3Example1m">First name</label>
+                            <span id="nameError" class="error"></span>
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <input id="lname" class="form-control form-control-lg"  onblur="validateLastName()" minlength="2" required type="text" autocomplete="off" name="lname"  />
+                            <label class="form-label" for="form3Example1n">Last name</label>
+                            <span id="lnameError" class="error"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <input type="text" id="uname" minlength="5" required   name="username" required pattern="[A-Za-z]{2,}" class="form-control form-control-lg" />
+                            <label class="form-label" for="form3Example1m1">Username</label>
+                            <span id="UsernameError" class="error"></span>
+                          </div>
+                        </div>
+                       
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <input  id="pwd" class="form-control form-control-lg"  type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"  minlength="8" required  autocomplete="off" name="password1"  required  />
+                            <label class="form-label" for="form3Example1m1">Password</label>
+                            <span id="passwordError" class="error"></span>
+                          </div>
+                        </div>
+                       
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <input  id="cpwd" class="form-control form-control-lg"  onblur="validateConfirmPassword()"  minlength="8" required type="password" autocomplete="new-password"  name="password2"  />
+                            <label class="form-label" for="form3Example1m1">Confirm Password</label>
+                            <span id="confirm" class="error"></span>
+                          </div>
+                        </div>
+                       
+                      </div>
+                    
+      
+                     
+      
+                  
+      
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+      
+                          <select  class="form-select" name="tags" aria-label="Default select example" multiple required">
+                            <option value="1">Select Tags:</option>
+                            {% for i in tags %}
+                            <option value="{{i.id}}">{{i.name}}</option>
+                           {% endfor %}
+                          </select>
+      
+                        </div>
+                       
+                      </div>
+      
+                      
+      
+                    
+      
+                    
+      
+                      <div class="form-outline mb-4">
+                        <input type="email"  id="form3Example97" class="form-control form-control-lg" onblur="ValidateEmail(document.form1.email)"  name="email" autocomplete="username" maxlength="200" required="" />
+                        <label class="form-label" for="form3Example97">Email ID</label>
+                        <span id="email" class="error"></span>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <input  id="mobile" class="form-control form-control-lg"    type="text" minlength="10"  onblur="validateMobileNumber()"  required name="mobile"/>
+                            <label class="form-label"  for="form3Example1m1">Mobile Number</label>
+                            <span id="mobileError" class="error"></span>
+                          </div>
+                        </div>
+                       
+                      </div>
+      
+                      <div class="d-flex justify-content-end pt-3">
+                       
+                        <button type="submit" class="btn btn-warning btn-lg ms-2">Submit</button>
+                      </div>
+                      </form>
+      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+  <!-- MDB -->
+<script
+type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"
+></script>  
+</body>
+</html>
+<script language="Javascript" type="text/javascript">
+  const mobileInput = document.getElementById('mobile');
+  const mobileError = document.getElementById('mobileError');
+  
+  // Regular expression pattern for 10-digit mobile number
+  const mobilePattern = /^[0-9]{10}$/;
+  
+  if (!mobilePattern.test(mobileInput.value)) {
+    mobileError.textContent = 'Please enter a valid 10-digit mobile number';
+  } else {
+    mobileError.textContent = '';
+  }
+
+  var passwordInput = document.getElementById("pwd");
+  var passwordError = document.getElementById("passwordError");
+
+  passwordInput.addEventListener("input", function() {
+    var password = passwordInput.value;
+
+    if (!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)) {
+      passwordError.textContent = "Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, and one digit";
+    } else {
+      passwordError.textContent = "";
+    }
+  });
+
+  var usernameInput = document.getElementById("uname");
+  var usernameError = document.getElementById("UsernameError");
+
+  usernameInput.addEventListener("input", function() {
+    if (usernameInput.validity.patternMismatch) {
+      usernameError.textContent = "Username must have at least 2 alphabetical characters";
+    } else {
+      usernameError.textContent = "";
+    }
+  });
+
+ 
+  function ValidateEmail(mail){
+    const nameError = document.getElementById('email');
+          //  alert("You have entered an invalid email address!")
+          if (/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(mail.value)){
+            nameError.textContent = '';
+              return (true);
+          }
+          nameError.textContent = "You have entered an invalid email address!";
+          
+          return (false);
+      }
+  
+      function validateFirstName() {
+        const firstNameInput = document.getElementById('fname');
+        const nameError = document.getElementById('nameError');
+      
+        if (firstNameInput.value.trim().length > 2) {
+          nameError.textContent = '';
+          return true;
+        } else {
+          nameError.textContent = "Please enter your first name with at least 3 characters";
+          return false;
+        }
+      }
+    
+      function validateUserName() {
+        const nameError = document.getElementById('UsernameError');
+        const firstNameInput = document.getElementById('uname');
+      
+        
+        if (firstNameInput.value.trim().length > 5) {
+          nameError.textContent = '';
+          
+          return true;
+        } else {
+          nameError.textContent = "Please enter your User name atleast 5 character";
+          
+          
+          return false;
+        }
+      }
+      function validateConfirmPassword() {
+        const confirmPasswordInput = document.getElementById('cpwd');
+       
+        const passwordInput = document.getElementById('pwd');
+        
+        if (confirmPasswordInput.value === passwordInput.value) {
+        
+          return true;
+        } else {
+          alert("'Passwords do not match.'");
+          
+          return false;
+        }
+      }
+  
+      function validateLastName() {
+        const nameError = document.getElementById('lnameError');
+        const firstNameInput = document.getElementById('lname');
+      
+        
+        if (firstNameInput.value.trim().length > 2) {
+          nameError.textContent = '';
+          
+          
+          return true;
+        } else {
+          nameError.textContent = "Please enter your Last name atleast 3 character";
+
+        
+          
+          return false;
+        }
+      }
+      function validatePassword() {
+        const nameError = document.getElementById('password');
+        const firstNameInput = document.getElementById('pwd');
+      
+        
+        if (firstNameInput.value.trim().length > 8) {
+          nameError.textContent = "";
+          
+          return true;
+        } else {
+          nameError.textContent = "Password  Must be 8 Characters!";
+         
+          
+          return false;
+        }
+      }
+  
+      function validateMobileNumber() {
+        const nameError = document.getElementById('mobileError');
+        const mobileNumberInput = document.getElementById('mobile');
+    
+        const mobileNumberPattern = /^(0|91)?[6-9][0-9]{9}$/; // Regular expression to match 10-digit mobile numbers
+        
+        if (mobileNumberPattern.test(mobileNumberInput.value.trim())) {
+          nameError.textContent = "";
+      
+          return true;
+        } else {
+          nameError.textContent = "Please enter a valid 10-digit mobile number.!";
+         
+          
+          return false;
+        }
+      }
+        </script>
