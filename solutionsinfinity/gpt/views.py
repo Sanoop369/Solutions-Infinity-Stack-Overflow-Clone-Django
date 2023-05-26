@@ -5,9 +5,11 @@ load_dotenv()
 
 api_key=os.getenv("OPENAI_KEY",None)
 
+
 # Create your views here.
 def gpt(request):
     chat_response=None
+    print(api_key)
     
     if api_key is not None and request.method == "POST":
         openai.api_key=api_key

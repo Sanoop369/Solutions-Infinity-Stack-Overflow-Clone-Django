@@ -330,7 +330,7 @@ def chart(request):
     ax.plot(dates, questions, label='Questions Asked')
     ax.plot(dates, solutions, label='Solutions Given')
     ax.set_xlabel('Date')
-    ax.set_ylabel('Count')
+    ax.set_ylabel('Progress')
     ax.set_title('Questions Asked and Solutions Given')
     ax.legend()
     date_fmt = matplotlib.dates.DateFormatter('%d %b')
